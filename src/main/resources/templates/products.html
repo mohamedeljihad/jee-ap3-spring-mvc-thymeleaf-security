@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{template1}">
+<head><title>Liste des produits</title></head>
+<body>
+<div layout:fragment="content1">
+    <div class="card">
+        <div class="card-header">Liste des produits</div>
+        <div class="card-body">
+            <form method="get" th:action="@{/user/index}" class="row g-2 mb-3">
+                <div class="col-auto"><label class="col-form-label">Mot clé :</label></div>
+                <div class="col-auto"><input type="text" name="keyword" th:value="${keyword}" class="form-control"></div>
+                <div class="col-auto"><button class="btn btn-info"><i class="bi bi-search"></i> Chercher</button></div>
+            </form>
+            <table class="table table-striped align-middle">
+                <thead>
+                <tr><th>ID</th><th>Nom</th><th>Prix</th><th>Quantité</th>
+                    <th sec:authorize="hasRole('ADMIN')" colspan="2">Actions</th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${productList}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.name}"></td>
+                    <td th:text="${#numbers.formatDecimal(p.price, 1, 2)}"></td>
+                    <td th:text="${p.quantity}"></td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <a class="btn btn-sm btn-success" th:href="@{/admin/editProduct(id=${p.id})}">
+                            <i class="bi bi-pencil"></i></a>
+                    </td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <form method="post" th:action="@{/admin/delete(id=${p.id}, page=${currentPage}, keyword=${keyword})}">
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Voulez-vous vraiment supprimer ce produit ?')">
+                                <i class="bi bi-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="page, status : ${pages}" class="me-1">
+                    <a th:href="@{/user/index(page=${status.index}, keyword=${keyword})}"
+                       th:class="${currentPage == status.index ? 'btn btn-info' : 'btn btn-outline-info'}"
+                       th:text="${status.index + 1}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

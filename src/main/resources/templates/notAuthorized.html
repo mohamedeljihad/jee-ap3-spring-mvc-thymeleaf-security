@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template1}">
+<head><title>Accès refusé</title></head>
+<body>
+<div layout:fragment="content1">
+    <div class="alert alert-danger mt-3">
+        <h4><i class="bi bi-shield-lock"></i> Accès refusé</h4>
+        Vous n'avez pas les droits nécessaires pour accéder à cette page (rôle ADMIN requis).
+        <a th:href="@{/user/index}" class="alert-link">Retour à la liste</a>
+    </div>
+</div>
+</body>
+</html>
