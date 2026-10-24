@@ -115,14 +115,13 @@ mvn test                     # tests de sécurité MockMvc
 mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 ```
 
-## Captures
-> Captures à ajouter après exécution :
-> - page de login ;
-> - liste des produits en ADMIN (boutons d'action visibles) et en USER (boutons masqués) ;
-> - recherche et pagination ;
-> - formulaire avec les erreurs de validation ;
-> - édition d'un produit ;
-> - page « Accès refusé » quand user1 ouvre `/admin/newProduct`.
+## Captures (exécution réelle dans IntelliJ, http://localhost:8094)
+| | |
+|---|---|
+| Démarrage dans IntelliJ (`spring-boot:run`, données de test affichées) ![](captures/00_intellij_demarrage.jpg) | Page de connexion ![](captures/01_login.jpg) |
+| Liste en ADMIN (boutons Modifier/Supprimer) ![](captures/02_produits_admin.jpg) | Recherche « smart » ![](captures/03_recherche.jpg) |
+| Validation du formulaire (Bean Validation) ![](captures/04_validation.jpg) | Édition d'un produit ![](captures/05_edition.jpg) |
+| Liste vue par user1 (rôle USER, actions masquées) ![](captures/06_produits_user1.jpg) | user1 sur `/admin/newProduct` → page « Accès refusé » ![](captures/07_acces_refuse_user1.jpg) |
 
 ## Conclusion
 - Spring MVC et Thymeleaf permettent de construire rapidement une application web en rendu serveur, avec des vues réutilisables grâce au layout dialect.
